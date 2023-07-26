@@ -99,6 +99,24 @@ impl CargoStacks {
         }
     }
 
+    pub fn play_moves_part_2(&mut self) {
+        for play in &self.moves {
+            let mut list_to_append: Vec<char> = Vec::new();
+
+            for _ in 0..play.occurances {
+                let stack_to_pop: &mut Vec<char> =
+                    self.stacks.get_mut(play.from_index as usize).unwrap();
+                list_to_append.push(stack_to_pop.pop().unwrap());
+            }
+
+            let stack_to_push: &mut Vec<char> =
+                self.stacks.get_mut(play.to_index as usize).unwrap();
+
+            list_to_append.reverse();
+            stack_to_push.append(&mut list_to_append);
+        }
+    }
+
     pub fn get_top_of_stacks(&self) -> Vec<char> {
         let mut res: Vec<char> = Vec::new();
         for stack in self.stacks.iter() {
